@@ -98,9 +98,8 @@ public class Movie extends JComponent {
         var elapsedSinceLastUpdate = timer.update(elapsedNanoseconds);
         if ( elapsedSinceLastUpdate.isPresent() )
         {
-           
+           renderCreatures();
             //(?)
-
         }
         else
         {
@@ -123,7 +122,7 @@ public class Movie extends JComponent {
      */
     private void renderCreatures() {
     	this.bfiRenderer.clearPixels(bufferedImage);
-    	
+    	this.bfiRenderer.renderCreature(bufferedImage);
     	
     }
     

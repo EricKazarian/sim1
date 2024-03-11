@@ -3,11 +3,15 @@ package util;
 
 public class Vector
 {
-
+    /**
+     * @invar | 0 <= x && 0 <= y
+     */
     private int x;
     private int y;
 
-
+    /**
+     * @post | x != null && y != null
+     */
     public Vector(int x, int y)
     {
         this.x = x;
@@ -16,6 +20,7 @@ public class Vector
 
     /**
      * Returns this Vector's x coordinate.
+     * @post | result == this.x
      */
     public int getX() {
     	return x;
@@ -23,6 +28,7 @@ public class Vector
 
     /**
      * Returns this Vector's y coordinate.
+     * @post | result == this.y
      */
     public int getY() {
     	return y;
@@ -30,16 +36,24 @@ public class Vector
     
     /**
      * mult. both components by fac
+     * @mutates | this
+     * @post | result != null
      */
     public Vector scaleWith(int fac) {
-    	return null;
+        this.x = this.getX() * fac;
+        this.y = this.getY() * fac;
+    	return this; //not sure what it's supposed to return actually
+        // return null;
     }
     
     /**
      * sum of this vector and other
      */
     public Vector plus(Vector other) {
-    	return null;
+        this.x = this.getX() + other.getX();
+        this.y = this.getY() + other.getY();
+        return this; //not sure what it's supposed to return actually
+    	// return null;
     }
 
 

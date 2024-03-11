@@ -17,12 +17,24 @@ public class Color
 
     /**
      * r, g, b should be 0 <= _ <= 255.
+     * @pre | 0 <= r <= 255 
+     *      | 0 <= b <= 255     
+     *      | 0 <= g <= 255
+     * OR
+     * @pre | isValidColorComponent(r) && isValidColorComponent(g) && isValidColorComponent(b)
+     * 
+     * @post | this.color != null
      */
+         // @mutates this.color // no mutate cause this is immutable
+
     public Color(int r, int g, int b)
     {
         this.color = 0xFF000000 | (r << 16) | (g << 8) | b; //this line is LEGIT
     }
 
+    /**
+     * @inspects c
+     */
     public static boolean isValidColorComponent(int c)
     {
         return 0 <= c && c <= 255;
@@ -30,7 +42,7 @@ public class Color
 
     public int asInteger()
     {
-        return this.color;
+        return this.color; //No clone required since it's private, I don't have to worry about RE.
     }
 
     @Override

@@ -16,7 +16,7 @@ import sim1.Simulation;
  * A swing window (JFrame class) containing 1 swing Component
  * in which the simulation is displayed 
  *
- */
+ */ 
 @SuppressWarnings("serial")
 public class SimLifeWindow extends JFrame {
 
@@ -86,7 +86,7 @@ public class SimLifeWindow extends JFrame {
     
 
     public Movie getMov() {
-    	return mov;
+    	return mov.clone(); 
     }
 
 

@@ -3,7 +3,10 @@ package sim1;
 import util.Orientation;
 import util.Point;
 
-
+// CreatureB: instances of this class represent creatures of kind B. CreatureB’s
+//     have a position field (of type Point), an orientation field (of type Orientation) and
+//     a behavior field (of type BehaviorB) which is used to decide how the creature will move/reorient at each step
+//     of the simulation.
 public class CreatureB
 {
 
@@ -39,7 +42,7 @@ public class CreatureB
 	 */
     public void moveForward(World world)
     {
-
+            int x_value = getX(getPosition())
     }
 
     /**
