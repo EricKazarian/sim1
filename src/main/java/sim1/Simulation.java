@@ -31,15 +31,31 @@ public class Simulation
      */
     public Simulation(int size, int populationSize, int numA)
     {
-
-    	this.populationSize = populationSize;
-    	this.world = null;
+    	int width = size/2;
+    	int height = size/2;
     	
+    	this.populationSize = populationSize;
+    	
+        CreatureA[] popA = new CreatureA[numA];
+    	for (int i = 0; i < numA; i++) {
+    		Orientation ranO = Orientation.createRandom();
+    		BehaviorA beh = new BehaviorA();
+    		Point ranP = Point.createRandomWithMin(size / 4, size / 4, size / 2 + size / 4, size / 2 + size / 4);
+    		popA[i] = new CreatureA(beh, ranP, ranO, Chromosome.createRandom());	
+    	}
+    	
+    	CreatureB[] popB = new CreatureB[populationSize - numA];
+    	for (int i = 0; i < populationSize - numA; i++) {
+    		Orientation ranO = Orientation.createRandom();
+    		BehaviorB beh = new BehaviorB();
+    		Point ranP = Point.createRandomWithMin(size / 4, size / 4, size / 2 + size / 4, size / 2 + size / 4);
+    		popB[i] = new CreatureB(beh, ranP, ranO);	
+    	}
+    	this.world = new World(width, height, popA, popB);
     }
     
-
     public int getPopulationSize() {
-    	return populationSize;
+    	return this.populationSize;
     }
     
 
@@ -53,11 +69,30 @@ public class Simulation
      * - Random positions for all creatures, within a central square whose points (x,y) are
      *   such that size/4 <= x < size/2 + size/4 (same for y)
      * - Chromosomes for creatures of kind A as in `chromsA`
+     * 
+     * @pre | chromsA.length == numA
      */
     public static World createRandWorldWith(int size, int popuSize, int numA, int numB, Chromosome[] chromsA) {
+    	int width = size/2;
+    	int height = size/2;
+    	    	
+        CreatureA[] popA = new CreatureA[numA];
+    	for (int i = 0; i < numA; i++) {
+    		Orientation ranO = Orientation.createRandom();
+    		BehaviorA beh = new BehaviorA();
+    		Point ranP = Point.createRandomWithMin(size / 4, size / 4, size / 2 + size / 4, size / 2 + size / 4);
+    		Chromosome newChrom =  chromsA[i];
+    		popA[i] = new CreatureA(beh, ranP, ranO, newChrom);	
+    	}
     	
-    	return null;
-
+    	CreatureB[] popB = new CreatureB[numB];
+    	for (int i = 0; i < numB; i++) {
+    		Orientation ranO = Orientation.createRandom();
+    		BehaviorB beh = new BehaviorB();
+    		Point ranP = Point.createRandomWithMin(size / 4, size / 4, size / 2 + size / 4, size / 2 + size / 4);
+    		popB[i] = new CreatureB(beh, ranP, ranO);	
+    	}
+    	return new World(width, height, popA, popB);
     }
 
     
@@ -84,11 +119,15 @@ public class Simulation
      */
     public void nextGeneration()
     {
+    	int survA = countSurvivingCreatureA();
+    	int survB = countSurvivingCreatureB();
     	//Formula from assignment
-    	//nextCountA = (int) Math.floor( ((double) survA / (survA + survB)) * populationSize );
-    	
-    	    	
-    	
+    	int nextCountA = (int) Math.floor( ((double) survA / (survA + survB)) * populationSize );
+    	for (int i = 0; i < nextCountA; i++) {
+    		
+    	}
+    	CreatureA[] popA = world.getPopulationA()/(world.getPopulationA() + world.getPopulationB();
+    	CreatureB[] popB = world.getPopulationB();
     }
     
     
@@ -96,16 +135,29 @@ public class Simulation
      * Returns the number of CreatureB that survive (see this.survives)
      */
     private int countSurvivingCreatureB() {
-    	return 0;
+    	int count = 0;
+    	CreatureB[] CreaturesB =  this.world.getPopulationB();
+    	for (int i = 0; i < this.world.getPopulationB().length; i++) {
+        	if (survives(CreaturesB[i].getPosition())){
+        		count += 1;
+        	}
+    	}
+        return count;    
     }
     
     /**
      * Returns the number of CreatureA that survive (see this.survives)
      */
     private int countSurvivingCreatureA() {
-    	return 0;
+    	int count = 0;
+    	CreatureA[] CreaturesA =  this.world.getPopulationA();
+    	for (int i = 0; i < this.world.getPopulationA().length; i++) {
+        	if (survives(CreaturesA[i].getPosition())){
+        		count += 1;
+        	}
+    	}
+        return count;
     }
-    
     
     /**
      * The list of Chromosome's of creatures of kind A that survive (according to this.survives)
@@ -113,8 +165,12 @@ public class Simulation
     private ArrayList<Chromosome> selectSurvivingDNA()
     {
         ArrayList<Chromosome> result = new ArrayList<Chromosome>();
-        //result.add(something)
-
+        CreatureA[] CreaturesA =  this.world.getPopulationA();
+    	for (int i = 0; i < this.world.getPopulationA().length; i++) {
+        	if (survives(CreaturesA[i].getPosition())){
+        		result.add(CreaturesA[i].getChromosome());
+        	}
+    	}
         return result;
     }
     
@@ -131,11 +187,25 @@ public class Simulation
      */
     private Chromosome[] computeOffspring(ArrayList<Chromosome> parentGeneration, int count)
     {
-    	
-//        if ( RandomUtil.integer(100) < Constants.MUT_RATE )
-//        {
-//            offspring.randomlyMutate();
-//        }
+    	if (parentGeneration == null) {
+    		Chromosome[] chrom = Chromosome.createRandom(count);
+    		return chrom;
+    	}
+    	int lengthOG = parentGeneration.size();
+    	Chromosome[] chrom = new Chromosome[count];
+    	for (int i = 0; i < lengthOG; i++) {    	
+        	int len = parentGeneration.size();
+    		int i1 = RandomUtil.integer(len);
+    		int i2 = RandomUtil.integer(len);
+    		while (i1 == i2) {
+    			i1 = RandomUtil.integer(len);
+    		}
+    		if ( RandomUtil.integer(100) < Constants.MUT_RATE )
+            {
+                offspring.randomlyMutate();
+            }
+    	}
+        
     	
     	return null;
 

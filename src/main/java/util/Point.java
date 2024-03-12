@@ -123,4 +123,17 @@ public class Point
     }
     
     
+    //Self implemented for Simulation: Simulation
+    public static Point createRandomWithMin(int minX, int minY, int maxX, int maxY)
+    {
+        //generate random number x between 0 and maxX
+        //generate random number y between 0 and maxY
+        //check randomUtil file if you don't get where this integer function comes from
+        Point randomPoint = new Point(RandomUtil.integer(minX, maxX), RandomUtil.integer(minY, maxY));
+        // this.x = x;
+        // this.y = y;
+        return randomPoint;
+    }
+    
+    
 }

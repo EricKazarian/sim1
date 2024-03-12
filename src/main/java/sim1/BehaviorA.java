@@ -16,13 +16,28 @@ public class BehaviorA
 	 * @mutates | creature
 	 */
     public void applyBehavior(World world, CreatureA creature)
-    {
-    	
-        
+    {   
         var drift = computeFavoriteOrientation(creature.getChromosome()).toVector();
-        RandomUtil.bool();
+//        RandomUtil.bool();
+        if (!world.isLimPos(creature.getPosition())) { //We check if it's at the border, if yes: it changes nothing.
+    		creature.moveForward(world, drift); //It will move depending on if it can or not
+	    	if (!world.isFree(creature.getPosition())){ //If it wasn't free to move, we take a 50/50 to change it's orientation.
+	    		boolean fifty = RandomUtil.bool();
+	    		if (fifty) {
+	    			creature.turnClockwise();
+	    		} else if (!fifty) {
+	    			creature.turnCounterclockwise();
+	    		}
+	    	}
+    	}
         
     }
+//    Creatures of kind A (red creatures) have a similar behavior with a crucial difference.
+//    The target position of each creature of kind A is computed as TARGET = CURRENT + ORIENTATION + DRIFT.
+//    The last summand DRIFT is a cardinal direction that is solely determined by the chromosome 
+//    (in fact a list of integers) that the creature carries.
+//    Similar to creatures of kind B, if a creature of kind A has not moved, its orientation is 
+//    randomly (50%) turned clockwise or counterclockwise.
     
 	/**
 	 * LEGIT

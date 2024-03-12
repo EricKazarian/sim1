@@ -58,7 +58,7 @@ public class Chromosome
      * index should be 0 <= index < Cst.CHROM_SIZE
      * UP: In the specification (comment) of Chromosome.getGene, an inequality has been made strict 
      * Correct version: index < Cst.CHROM_SIZE.
-     * @pre | index < Constants.CHROM_SIZE 
+     * @pre | index   < Constants.CHROM_SIZE 
      * @inspects | this
      */
     public int getGene(int index)
@@ -86,12 +86,12 @@ public class Chromosome
     {
         int[] offspringGenes = new int[Constants.CHROM_SIZE];
 
-        for ( int i = index ; i < Constants.CHROM_SIZE / 2 ; ++i )
+        for (int i = 0; i < index ; ++i )
         {
             offspringGenes[i] = this.getGene(i);
         }
 
-        for ( int i = Constants.CHROM_SIZE / 2 ; i != Constants.CHROM_SIZE; ++i )
+        for (int i = index; i < Constants.CHROM_SIZE; ++i )
         {
             offspringGenes[i] = other.getGene(i);
         }

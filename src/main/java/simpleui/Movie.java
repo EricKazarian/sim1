@@ -124,7 +124,7 @@ public class Movie extends JComponent {
     	//go throught all creatures A and B in world
     	for (int i = 0; i < (sim.getWorld().getPopulationA()).length; i++) {
     		CreatureA[] popA = sim.getWorld().getPopulationA();
-        	this.bfiRenderer.renderCreature(bufferedImage, popA[i], Color.RED);
+        	this.bfiRenderer.renderCreature(bufferedImage, popA[i].getPosition(), Color.RED);
     	}
     	
     }

@@ -1,7 +1,8 @@
-package sim1;
+ package sim1;
 
 import util.Orientation;
 import util.Point;
+import util.RandomUtil;
 
 // CreatureB: instances of this class represent creatures of kind B. CreatureB’s
 //     have a position field (of type Point), an orientation field (of type Orientation) and
@@ -15,14 +16,14 @@ public class CreatureB
     private Orientation orientation;
 
     private final BehaviorB behavior;
-    /**
-     * @representationObject
-     */
-    private Chromosome chrom;
+//    /**
+//     * @representationObject
+//     */
+//    private Chromosome chrom;
 
 
 
-    public CreatureB(BehaviorB behavior, Point position, Orientation orientation, Chromosome chrom)
+    public CreatureB(BehaviorB behavior, Point position, Orientation orientation)
     {
 
         this.behavior = behavior;
@@ -30,7 +31,7 @@ public class CreatureB
         this.orientation = orientation;
         
         //this was not given (the param and private too)
-        this.chrom = chrom;
+//        this.chrom = chrom;
 
     }
 
@@ -48,9 +49,9 @@ public class CreatureB
     	return this.behavior;
     }
     
-    public Chromosome getChromosome() {
-    	return chrom;
-    }
+//    public Chromosome getChromosome() {
+//    	return chrom;
+//    }
     /**
      * Changes the position of `this` if `world` is free at the target pos.
      * The orientation remains unchanged in any case.
@@ -60,7 +61,7 @@ public class CreatureB
     {	
     	if (world.isFree(this.getPosition())) {
 //    		Point pos = this.getPosition();
-        	position = position.move(orientation.toVector());
+        	position = position.move(orientation.toVector()); //<=> TARGET = CURRENT + ORIENTATION
     	} 
     }
 
@@ -100,7 +101,7 @@ public class CreatureB
      * @creates | result
      */
     public CreatureB giveCopy() {
-    	CreatureB newCreature = new CreatureB(this.getBehavior(), this.getPosition(), this.getOrientation(), this.getChromosome());
+    	CreatureB newCreature = new CreatureB(this.getBehavior(), this.getPosition(), this.getOrientation());
     	//CHECK COULD BE THAT IT NEEDS TO BE WITH A FOR LOOP(: the chromosomes)
     	return newCreature;
 //    	return null;
