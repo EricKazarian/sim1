@@ -9,9 +9,6 @@ public class Vector
     private int x;
     private int y;
 
-    /**
-     * @post | x != null && y != null
-     */
     public Vector(int x, int y)
     {
         this.x = x;
@@ -20,7 +17,6 @@ public class Vector
 
     /**
      * Returns this Vector's x coordinate.
-     * @post | result == this.x
      */
     public int getX() {
     	return x;
@@ -28,7 +24,6 @@ public class Vector
 
     /**
      * Returns this Vector's y coordinate.
-     * @post | result == this.y
      */
     public int getY() {
     	return y;
@@ -48,6 +43,7 @@ public class Vector
     
     /**
      * sum of this vector and other
+     * @post | getX() == old(getX()) + other.getX() && getY() == old(getY()) + other.getY()
      */
     public Vector plus(Vector other) {
         this.x = this.getX() + other.getX();

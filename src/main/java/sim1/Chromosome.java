@@ -16,10 +16,11 @@ public class Chromosome
 
     /**
      * @pre | weights != null
-     * @post | weights != null
+     * @post | weights != null 
      */
 	public Chromosome(int[] weights)
 	{
+	     // use this later on to check index per index....@post | Arrays.stream(result).allMatch(row -> row != null && row.length == result[0].length && 1 <= row.length)
 		this.weights = weights.clone(); //not sure about the .clone
 	}
 
@@ -41,15 +42,15 @@ public class Chromosome
 	/**
 	 * Gives `count` randomly generated chromosomes
      * @pre | 0 <= count
-     * @post | newArray.length == count
+     * @post | result.length == count
 	 */
     public static Chromosome[] createRandom(int count)
     {   
-        int[] newArray = new int[count]; 
+        Chromosome[] newArray = new Chromosome[count]; 
         for (int i = 0; i < count; i++){
-            newArray[i] = createRandom()
+            newArray[i] = createRandom();
         }
-    	return Chromosome(newArray);
+    	return newArray;
         //return null;
     }
 
@@ -57,19 +58,17 @@ public class Chromosome
      * index should be 0 <= index < Cst.CHROM_SIZE
      * UP: In the specification (comment) of Chromosome.getGene, an inequality has been made strict 
      * Correct version: index < Cst.CHROM_SIZE.
-     * @pre | index < Cst.CHROM_SIZE 
+     * @pre | index < Constants.CHROM_SIZE 
      * @inspects | this
-     * @post | result == this.weights[index]
      */
     public int getGene(int index)
     {
     	return this.weights[index]; //not sure if clone needed
-
     }
     
     /**
-     * @pre | index < Cst.CHROM_SIZE
-     * @post | this.weights[index] == val
+     * @pre | index < Constants.CHROM_SIZE
+     * @post | getGene(index) == val && old(getGene(index)) != val
      */
     public void setGene(int index, int val) {
     	this.weights[index] = val;
@@ -102,7 +101,7 @@ public class Chromosome
 
     /**
      * Gene #index is set to gene + delta if that modification remains within gene bounds.
-     * @pre | index < weights.length
+     * @pre | index < getGene().length
      *      | -200 < delta < 200
      * @post | GENE_MIN < this.weights[index] < GENE_MAX
      */
@@ -113,7 +112,7 @@ public class Chromosome
     public void mutate(int index, int delta)
     {
         int mutationValue = this.weights[index] + delta;
-        if (mutationValue < ((GENE_MAX - GENE_MIN) / 2)){
+        if (mutationValue < ((Constants.GENE_MAX - Constants.GENE_MIN) / 2)){
             this.weights[index] = mutationValue;
         }
     }
@@ -129,7 +128,12 @@ public class Chromosome
     
 
     public Chromosome giveCopy() {
-    	return this.clone();
+    	int[] array = new int[this.weights.length];
+    	for (int i = 0; i < this.weights.length; i++) {
+    		array[i] = this.getGene(i);
+    	}
+    	Chromosome newChrom = Chromosome(array);
+    	return newChrom;
     }
     
     /**

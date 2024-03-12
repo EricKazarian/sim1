@@ -17,16 +17,21 @@ public class World
     /**
      * @representationObject
      * @representationObjects
+     * @invar | populationA != null
      */
     private final CreatureA[] populationA;
 
     /**
      * @representationObject
      * @representationObjects
+     * @invar | populationB != null
      */
     private final CreatureB[] populationB;
 
-
+    /**
+     * @pre pop A and B can't be null, as for height and width I don't think there are limits to what they can be
+     * 		 | popA != null && popB != null
+     */
     public World(int width, int height, CreatureA[] popA, CreatureB[] popB)
     {
         this.width = width;
@@ -49,7 +54,6 @@ public class World
 
     public CreatureA[] getPopulationA()
     {
-
         return populationA;
     }
 
@@ -71,9 +75,15 @@ public class World
     
     /**
      * @pre | pos != null
-     * Returns true iff pos is 1 unit away from a wall (and inside the world)
+     * Returns true if pos is 1 unit away from a wall (and inside the world)
      */
     public boolean isLimPos(Point pos) {
+        //CHECK
+
+    	if (isInside(pos) == false) { return false;}
+    	if (pos.getX() == (width - 1) || pos.getX() == 1 || pos.getY() == (height - 1) || pos.getY() == 1) {
+    		return true;
+    	}
     	return false;
     }
 
@@ -107,13 +117,32 @@ public class World
     
 
     /**
-     * true iff position is inside the world and no creature sits there
+     * true if position is inside the world and no creature sits there
      * 
      * @pre | position != null
      */
     public boolean isFree(Point position)
     {
-        return false;
+    	//Check if out of bounds
+    	if (isInside(position) == false) {
+    		return false;
+    	}
+    	//check if the creaturesA sits in position
+    	for (int i = 0; i < getPopulationA().length; i++) {
+    		CreatureA[] array = getPopulationA();
+    		if((array[i].getPosition()).getX() == position.getX() || (array[i].getPosition()).getY() == position.getY()) {
+    			return false;
+    		}	
+    	}
+    	//check if the creaturesB sits in position
+    	for (int i = 0; i < getPopulationB().length; i++) {
+    		CreatureB[] array = getPopulationB();
+    		if((array[i].getPosition()).getX() == position.getX() || (array[i].getPosition()).getY() == position.getY()) {
+    			return false;
+    		}	
+    	}
+    	return true;
+//        return false;
     }
 
     /**

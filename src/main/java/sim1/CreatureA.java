@@ -34,7 +34,9 @@ public class CreatureA
     }
 
 
-    public Orientation getOrientation() { return this.orientation; }
+    public Orientation getOrientation() { 
+    	return this.orientation; 
+    	}
     
 
     public BehaviorA getBehavior() {
@@ -86,6 +88,6 @@ public class CreatureA
      * @creates | result
      */
     public CreatureA giveCopy() {
-    	return null;
+    	return (this).clone();
     }
 }

@@ -13,6 +13,7 @@ public class Simulation
 	
 	/**
 	 * To remain efficient this reference can freely be accessed by the client
+	 * @invar | world != null
 	 */
 	private World world;
 
@@ -59,8 +60,11 @@ public class Simulation
 
     }
 
-
+    
     public World getWorld() {
+    	if (world == null) {
+            throw new IllegalArgumentException("the 'World' cannot be null.");
+    	}
     	CreatureA[] popA = world.getPopulationA();
     	CreatureB[] popB = world.getPopulationB();
     	return new World(world.getWidth(), world.getHeight(), popA, popB);

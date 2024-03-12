@@ -41,8 +41,10 @@ public class CreatureB
      * 
 	 */
     public void moveForward(World world)
-    {
-            int x_value = getX(getPosition())
+    {	
+    	if (world.isFree(getPosition())) {
+    		
+    	} 
     }
 
     /**

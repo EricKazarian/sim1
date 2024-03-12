@@ -98,8 +98,7 @@ public class Movie extends JComponent {
         var elapsedSinceLastUpdate = timer.update(elapsedNanoseconds);
         if ( elapsedSinceLastUpdate.isPresent() )
         {
-           renderCreatures();
-            //(?)
+           renderCreatures(); //(?) was here, I think I got it
         }
         else
         {
@@ -122,7 +121,11 @@ public class Movie extends JComponent {
      */
     private void renderCreatures() {
     	this.bfiRenderer.clearPixels(bufferedImage);
-    	this.bfiRenderer.renderCreature(bufferedImage);
+    	//go throught all creatures A and B in world
+    	for (int i = 0; i < (sim.getWorld().getPopulationA()).length; i++) {
+    		CreatureA[] popA = sim.getWorld().getPopulationA();
+        	this.bfiRenderer.renderCreature(bufferedImage, popA[i], Color.RED);
+    	}
     	
     }
     
