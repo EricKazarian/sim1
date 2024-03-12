@@ -17,10 +17,15 @@ public class Color
 
     /**
      * r, g, b should be 0 <= _ <= 255.
-     * @pre | isValidColorComponent(r) && isValidColorComponent(g) && isValidColorComponent(b)
+     * @throws IllegalArgumentException | !isValidColorComponent(r) || !isValidColorComponent(g) || !isValidColorComponent(b)
+     * @pre  r, g and b need to be in the interval of [0, 255]
+     * 		| isValidColorComponent(r) && isValidColorComponent(g) && isValidColorComponent(b)
      */
     public Color(int r, int g, int b)
-    {
+    {	
+    	if ( !isValidColorComponent(r) || !isValidColorComponent(g) || !isValidColorComponent(b)) {
+    		throw new IllegalArgumentException("There is an invalid color component!");
+    	}
         this.color = 0xFF000000 | (r << 16) | (g << 8) | b; //this line is LEGIT
     }
 
@@ -29,7 +34,12 @@ public class Color
      */
     public static boolean isValidColorComponent(int c)
     {
-        return 0 <= c && c <= 255;
+    	if (c == -1)
+    		return false;
+        if (0 <= c && c <= 255) {
+        	return true;
+        }
+        return false;
     }
 
     public int asInteger()

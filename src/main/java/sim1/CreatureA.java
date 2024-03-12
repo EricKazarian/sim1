@@ -50,6 +50,7 @@ public class CreatureA
 
     /**
      * The orientation remains unchanged.
+     * @inspects | world 
      */
     public void moveForward(World world, Vector drift)
     {
@@ -59,13 +60,14 @@ public class CreatureA
     
     public void turnClockwise()
     {
-        
+        this.orientation = this.orientation.turnClockwise(1);
     }
     
 
     public void turnCounterclockwise()
     {
-        
+        this.orientation = this.orientation.turnCounterclockwise(1);
+
     }
 
     /**
@@ -78,16 +80,30 @@ public class CreatureA
     }
     
     /**
-     * true iff same position and orient. and chromosome
+     * true if same position and orient. and chromosome
      */
     public boolean isEqual(CreatureA other) {
-    	return false;
+    	if (other.getPosition() != this.getPosition() 
+//    			|| other.getChromosome() == this.getChromosome() //not sure if I can do this so I added a whole ass for loop
+    			|| other.getOrientation() != this.getOrientation()){
+    		return false;
+    	}
+    	Chromosome curChrom = this.getChromosome();
+    	Chromosome otherChrom = other.getChromosome();
+    	for (int i = 0; i < curChrom.getLength() ; i++) {
+    		if (curChrom.getGene(i) != otherChrom.getGene(i)) {
+    			return false;
+    		}
+    	}
+    	return true;
     }
     
     /**
      * @creates | result
      */
     public CreatureA giveCopy() {
-    	return (this).clone();
+    	CreatureA newCreature = new CreatureA(this.getBehavior(), this.getPosition(), this.getOrientation(), this.getChromosome());
+    	//CHECK COULD BE THAT IT NEEDS TO BE WITH A FOR LOOP(: the chroms
+    	return newCreature;
     }
 }

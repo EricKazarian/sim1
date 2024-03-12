@@ -15,14 +15,23 @@ public class CreatureB
     private Orientation orientation;
 
     private final BehaviorB behavior;
+    /**
+     * @representationObject
+     */
+    private Chromosome chrom;
 
 
-    public CreatureB(BehaviorB behavior, Point position, Orientation orientation)
+
+    public CreatureB(BehaviorB behavior, Point position, Orientation orientation, Chromosome chrom)
     {
 
         this.behavior = behavior;
         this.position = position;
         this.orientation = orientation;
+        
+        //this was not given (the param and private too)
+        this.chrom = chrom;
+
     }
 
 
@@ -34,7 +43,14 @@ public class CreatureB
 
     public Orientation getOrientation() { return this.orientation; }
     
-
+    //this function was not given
+    public BehaviorB getBehavior() {
+    	return this.behavior;
+    }
+    
+    public Chromosome getChromosome() {
+    	return chrom;
+    }
     /**
      * Changes the position of `this` if `world` is free at the target pos.
      * The orientation remains unchanged in any case.
@@ -42,8 +58,9 @@ public class CreatureB
 	 */
     public void moveForward(World world)
     {	
-    	if (world.isFree(getPosition())) {
-    		
+    	if (world.isFree(this.getPosition())) {
+//    		Point pos = this.getPosition();
+        	position = position.move(orientation.toVector());
     	} 
     }
 
@@ -52,12 +69,13 @@ public class CreatureB
      */
     public void turnClockwise()
     {
-        
+        this.orientation = this.orientation.turnClockwise(1);
     }
 
 
     public void turnCounterclockwise()
     {
+    	//this was given
         this.orientation = this.orientation.turnCounterclockwise(1);
     }
 
@@ -82,7 +100,10 @@ public class CreatureB
      * @creates | result
      */
     public CreatureB giveCopy() {
-    	return null;
+    	CreatureB newCreature = new CreatureB(this.getBehavior(), this.getPosition(), this.getOrientation(), this.getChromosome());
+    	//CHECK COULD BE THAT IT NEEDS TO BE WITH A FOR LOOP(: the chromosomes)
+    	return newCreature;
+//    	return null;
     }
     
 }

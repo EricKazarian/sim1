@@ -101,9 +101,9 @@ public class Chromosome
 
     /**
      * Gene #index is set to gene + delta if that modification remains within gene bounds.
-     * @pre | index < getGene().length
+     * pre | index < weights.length
      *      | -200 < delta < 200
-     * @post | GENE_MIN < this.weights[index] < GENE_MAX
+     * post | Constants.GENE_MIN < getGene(index) < Constants.GENE_MAX
      */
     // public static int CHROM_SIZE = 6; // should be >=3
 	// public static int GENE_MIN = 0;
@@ -130,10 +130,13 @@ public class Chromosome
     public Chromosome giveCopy() {
     	int[] array = new int[this.weights.length];
     	for (int i = 0; i < this.weights.length; i++) {
-    		array[i] = this.getGene(i);
+    		array[i] = this.getGene(i); // I have a feeling this will cause REP.EXP. at some point.
     	}
-    	Chromosome newChrom = Chromosome(array);
-    	return newChrom;
+    	Chromosome newChrom = new Chromosome(array);
+    	if ( this.isEqual(newChrom) ) {
+        	return newChrom;
+    	}
+    	throw new IllegalArgumentException("'giveCopy()' in chromosome didn't work it seems lil' bro");
     }
     
     /**
@@ -145,5 +148,10 @@ public class Chromosome
     		res = res && (weights[i] == other.getGene(i));
     	}
     	return res;
+    }
+    
+    //self imp for CreatureA for the isequal function 
+    public int getLength() {
+    	return this.weights.length;
     }
 }
