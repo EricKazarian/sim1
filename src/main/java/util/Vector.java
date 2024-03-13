@@ -35,10 +35,9 @@ public class Vector
      * @post | result != null
      */
     public Vector scaleWith(int fac) {
-        this.x = this.getX() * fac;
-        this.y = this.getY() * fac;
-    	return this; //not sure what it's supposed to return actually
-        // return null;
+        this.x = x * fac;
+        this.y = y * fac;
+    	return this; 
     }
     
     /**
@@ -46,10 +45,9 @@ public class Vector
      * @post | getX() == old(getX()) + other.getX() && getY() == old(getY()) + other.getY()
      */
     public Vector plus(Vector other) {
-        this.x = this.getX() + other.getX();
-        this.y = this.getY() + other.getY();
-        return this; //not sure what it's supposed to return actually
-    	// return null;
+        this.x = x + other.x;
+        this.y = y + other.y;
+        return this; 
     }
 
 
