@@ -50,9 +50,9 @@ public class BufferedImageRenderer
         }
 
         return 0 <= position.getX() &&
-                position.getX() < this.getWidth() &&
+                position.getX() < width &&
                 0 <= position.getY() &&
-                position.getY() < this.getHeight();
+                position.getY() < height;
     }
 
     public void clearPixels(BufferedImage bufferedImage)
